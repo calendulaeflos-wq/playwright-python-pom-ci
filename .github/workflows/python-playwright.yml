@@ -22,7 +22,8 @@ jobs:
 
     - name: Instaliraj zavisnosti i Playwright Browsere
       run: |
-        pip install pytest-playwright
+        # Dodajte pytest-html ovde!
+        pip install pytest-playwright pytest-html
         # Instalacija browsera sa zavisnostima za Ubuntu
         playwright install --with-deps
 
