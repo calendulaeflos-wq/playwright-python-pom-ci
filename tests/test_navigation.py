@@ -3,20 +3,21 @@ from playwright.sync_api import Page, expect
 from pages.home_page import HomePage
 
 
-# Test 1: PROLAZI (Provera naslova)
+# Test 1: Proverava naslov stranice
 def test_page_title_is_correct(page: Page):
     home_page = HomePage(page)
     home_page.navigate()
 
-    # Assert (Provera)
-    expect(page).to_have_title("Playwright: Fast and reliable end-to-end testing for modern web apps")
+    # ISPRAVNA ASERCIJA: Očekivana vrednost koja je tačna
+    expected_title = "Fast and reliable end-to-end testing for modern web apps | Playwright Python"
+    expect(page).to_have_title(expected_title)
 
 
-# Test 2: PADA (Da bi se generisao screenshot u izveštaju)
-def test_non_existent_element_fails(page: Page):
+# Test 2: Testira navigaciju na docs stranicu
+def test_navigate_to_docs_and_verify_heading(page: Page):
     home_page = HomePage(page)
     home_page.navigate()
+    home_page.click_get_started()
 
-    # NAMERNO PADA: Provera nepostojećeg elementa
-    # Kada ovaj test padne, Playwright će automatski snimiti screenshot
-    expect(home_page.non_existent_locator).to_be_visible(timeout=5000)
+    # ASERCIJA: Provera da li je naslov 'Installation' vidljiv
+    expect(home_page.docs_heading).to_be_visible()

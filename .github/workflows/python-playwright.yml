@@ -22,23 +22,23 @@ jobs:
 
     - name: Instaliraj zavisnosti i Playwright Browsere
       run: |
-        # Dodajte pytest-html ovde!
+        # Instalacija pytest-html za generisanje HTML izveštaja
         pip install pytest-playwright pytest-html
-        # Instalacija browsera sa zavisnostima za Ubuntu
         playwright install --with-deps
 
-    - name: Pokreni Playwright testove i generiši izveštaj
-      # Ključno: dodaje koren projekta u Python putanju za uvoz POM klasa
+    - name: Pokreni Playwright testove
       run: |
+        # Dodavanje korenog direktorijuma u PYTHONPATH za uvoz 'pages' modula
         export PYTHONPATH=$PYTHONPATH:$(pwd)
         pytest --verbose
 
     - name: Spakuj izveštaj i snimke ekrana
       uses: actions/upload-artifact@v4
-      if: always() # Uvek spakuj artefakte, čak i pri neuspehu
+      if: always()
       with:
         name: playwright-test-report
+        # Čiste putanje bez komentara, radi pravilnog funkcionisanja
         path: |
-          playwright-report/ # Folder sa HTML izveštajem i snimcima
-          test-results/      # Alternativni folder za Playwright artefakte
+          playwright-report/
+          test-results/
         retention-days: 7
