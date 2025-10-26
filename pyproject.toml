@@ -1,0 +1,8 @@
+# pyproject.toml
+[tool.pytest.ini_options]
+addopts = [
+    "--screenshot", "only-on-failure",  # Snimi screenshot SAMO KADA TEST PADNE
+    "--html=playwright-report/report.html", # Generiši HTML izveštaj
+    "--self-contained-html",             # Sve u jednom HTML fajlu
+    "--junitxml=playwright-report/results.xml" # Dodatni izveštaj koji se uvek kreira
+]

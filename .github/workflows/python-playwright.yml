@@ -1,0 +1,43 @@
+# .github/workflows/python-playwright.yml
+name: Playwright Python CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout koda
+      uses: actions/checkout@v4
+
+    - name: Postavi Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Instaliraj zavisnosti i Playwright Browsere
+      run: |
+        pip install pytest-playwright
+        # Instalacija browsera sa zavisnostima za Ubuntu
+        playwright install --with-deps
+
+    - name: Pokreni Playwright testove i generiši izveštaj
+      # Ključno: dodaje koren projekta u Python putanju za uvoz POM klasa
+      run: |
+        export PYTHONPATH=$PYTHONPATH:$(pwd)
+        pytest --verbose
+
+    - name: Spakuj izveštaj i snimke ekrana
+      uses: actions/upload-artifact@v4
+      if: always() # Uvek spakuj artefakte, čak i pri neuspehu
+      with:
+        name: playwright-test-report
+        path: |
+          playwright-report/ # Folder sa HTML izveštajem i snimcima
+          test-results/      # Alternativni folder za Playwright artefakte
+        retention-days: 7
