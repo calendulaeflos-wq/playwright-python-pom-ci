@@ -4,6 +4,7 @@ from playwright.sync_api import Page, Locator
 
 class HomePage:
     URL = "https://playwright.dev/python"
+    url="url"
 
     def __init__(self, page: Page):
         self.page = page
