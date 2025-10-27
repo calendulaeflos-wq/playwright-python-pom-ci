@@ -20,3 +20,4 @@ class HomePage:
     def click_get_started(self):
         """Klikne na link 'Get started'."""
         self.get_started_link.click()
+        print("all done!")
